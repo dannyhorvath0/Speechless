@@ -1,19 +1,20 @@
 <!-- index.html -->
     <!DOCTYPE html>
-    <html>
+    <html ng-app="speechlessApp">
     <head>
       <!-- SCROLLS -->
       <!-- load bootstrap and fontawesome via CDN -->
-      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
 
       <!-- SPELLS -->
       <!-- load angular and angular route via CDN -->
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-          <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
       <script src="script.js"></script>
     </head>
-    <body>
+    <body ng-controller="mainController">
 
         <!-- HEADER AND NAVBAR -->
         <header>
@@ -32,10 +33,9 @@
 
         <!-- MAIN CONTENT AND INJECTED VIEWS -->
         <div id="main">
-
             <!-- angular templating -->
             <!-- this is where content will be injected -->
-
+            <div ng-view></div>
         </div>
 
     </body>
