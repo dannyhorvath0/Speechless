@@ -2,9 +2,7 @@
 var speechlessApp = angular.module('speechlessApp', ['ngRoute']);
 
 speechlessApp.config(function($routeProvider) {
-
-  //Route for the homepage
-  .when('/', {
+  $routeProvider.when('/', {
     templateUrl : 'pages/home.html',
     controller : 'mainController'
   })
