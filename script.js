@@ -36,7 +36,7 @@ speechlessApp.controller('mainController', function($scope, $http) {
   $scope.createParseRequest = function(text) {
     $http.post(url, {
       headers:{'request': 'parse', 'data_type': 'text'},
-      data: JSON.stringify({text:text, 'extractors':'words'}),
+      data: JSON.stringify({text:text}),
     }).then(function(response) {
       console.log(response);
     }).catch(function (response) {
