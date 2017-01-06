@@ -1,13 +1,15 @@
 //Create the module
 var speechlessApp = angular.module('speechlessApp', []);
 //Create controller and inject Angular's $scope
-speechlessApp.controller('mainController', function($scope) {
+speechlessApp.controller('mainController', function($scope, $http) {
+  var url = "http://127.0.0.1:11200/json"
+  $http.defaults.headers.common = { 'X-TextRazor-Key' : 'c35c38c99a2bcfefb728539c99e1688a2ab2dea76155b337b147f89f' }
   $scope.init = function() {
     if (annyang) {
         // Let's define our first command. First the text we expect, and then the function it should call
         var commands = {
           '*text': function(text) {
-            $('#text').text(text);
+            $scope.createParseRequest(text);
           }
         };
         //Turn on debug
@@ -29,5 +31,16 @@ speechlessApp.controller('mainController', function($scope) {
           annyang.resume();
         }
     }
+  }
+
+  $scope.createParseRequest = function(text) {
+    $http.post(url, {
+      headers:{'request': 'parse', 'data_type': 'text'},
+      data: JSON.stringify({text:text, 'extractors':'words'}),
+    }).then(function(response) {
+      console.log(response);
+    }).catch(function (response) {
+      console.log(response);
+    });
   }
 });
