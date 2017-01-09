@@ -2,13 +2,11 @@
 var speechlessApp = angular.module('speechlessApp', []);
 //Create controller and inject Angular's $scope
 speechlessApp.controller('mainController', function($scope, $http) {
-  var url = "http://127.0.0.1:11200/json"
   $scope.init = function() {
     if (annyang) {
-        // Let's define our first command. First the text we expect, and then the function it should call
         var commands = {
           '*text': function(text) {
-            $scope.createParseRequest(text);
+            //Hier moet je de text sturen naar je server Luuk
           }
         };
         //Turn on debug
@@ -30,16 +28,5 @@ speechlessApp.controller('mainController', function($scope, $http) {
           annyang.resume();
         }
     }
-  }
-
-  $scope.createParseRequest = function(text) {
-    $http.post(url, {
-      headers:{'request': 'parse', 'data_type': 'text'},
-      data: JSON.stringify({text:text}),
-    }).then(function(response) {
-      console.log(response);
-    }).catch(function (response) {
-      console.log(response);
-    });
   }
 });
