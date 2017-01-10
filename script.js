@@ -35,22 +35,22 @@ speechlessApp.controller('mainController', function($scope, $http) {
         "pos": "name",
       },
       {
-        "word": "met",
+        "word": "in",
         "pt": "vz",
         "rel": "hd",
         "pos": "prep",
       },
       {
-        "word": "naam",
+        "word": "januari",
         "pt": "n",
         "rel": "hd",
         "pos": "noun",
       },
       {
-        "word": "Jansen",
-        "pt": "n",
+        "word": "2017",
+        "pt": "tw",
         "rel": "app",
-        "pos": "name",
+        "pos": "num",
       }
     ]
   };
@@ -70,6 +70,21 @@ speechlessApp.controller('mainController', function($scope, $http) {
     "producten",
     "medewerkers",
     "leveranciers"
+  ]
+
+  var months = [
+    "januari",
+    "februari",
+    "maart",
+    "april",
+    "mei",
+    "juni",
+    "juli",
+    "augustus",
+    "september",
+    "oktober",
+    "november",
+    "december"
   ]
 
   $scope.method = ""
@@ -118,6 +133,9 @@ speechlessApp.controller('mainController', function($scope, $http) {
         case "n":
           $scope.detectNoun(angular.lowercase(value));
           break;
+        case "tw":
+          $scope.parameters.push(value.word);
+          break;
       }
     });
     $scope.createLink();
@@ -139,6 +157,9 @@ speechlessApp.controller('mainController', function($scope, $http) {
     if(noun.pos == "name") {
       $scope.parameters.push(noun.word);
     }
+    if($scope.isMonth(noun.word)){
+      $scope.parameters.push(noun.word);
+    }
   }
 
   $scope.isShowVerb = function(verb) {
@@ -157,16 +178,24 @@ speechlessApp.controller('mainController', function($scope, $http) {
     }
   }
 
+  $scope.isMonth = function(noun) {
+    if(months.indexOf(noun) > -1){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   $scope.createLink = function() {
     $scope.modifiedLink = $scope.link + $scope.table;
     var length = $scope.parameters.length;
     if(length > 0) {
-      $scope.modifiedLink = $scope.modifiedLink + "?w=";
+      $scope.modifiedLink = $scope.modifiedLink + "?=";
       angular.forEach($scope.parameters, function(value, index){
         if((index+1) == length){
           $scope.modifiedLink = $scope.modifiedLink + value;
         } else {
-          $scope.modifiedLink = $scope.modifiedLink + value + "+";
+          $scope.modifiedLink = $scope.modifiedLink + value + "&";
         }
       })
     }
