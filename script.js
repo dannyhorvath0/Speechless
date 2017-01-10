@@ -8,16 +8,31 @@ speechlessApp.controller('mainController', function($scope, $http) {
         "word": "Geef",
         "pt": "ww",
         "rel": "hd",
+        "pos": "verb",
       },
       {
         "word": "alle",
         "pt": "vnw",
         "rel": "det",
+        "pos": "det",
       },
       {
         "word": "klanten",
         "pt": "n",
         "rel": "hd",
+        "pos": "noun",
+      },
+      {
+        "word": "in",
+        "pt": "vz",
+        "rel": "hd",
+        "pos": "prep",
+      },
+      {
+        "word": "Leusden",
+        "pt": "n",
+        "rel": "obj1",
+        "pos": "name",
       }
     ]
   };
@@ -40,6 +55,7 @@ speechlessApp.controller('mainController', function($scope, $http) {
   ]
 
   $scope.method = ""
+  $scope.table = ""
   $scope.parameter = ""
   $scope.link = "dhh.whatsnext.nl/"
 
@@ -81,7 +97,7 @@ speechlessApp.controller('mainController', function($scope, $http) {
           $scope.detectVerb(angular.lowercase(value.word));
           break;
         case "n":
-          $scope.detectNoun(angular.lowercase(value.word));
+          $scope.detectNoun(angular.lowercase(value));
           break;
       }
     });
@@ -98,8 +114,12 @@ speechlessApp.controller('mainController', function($scope, $http) {
   }
 
   $scope.detectNoun = function(noun) {
-    if($scope.isNextTable(noun)){
-      $scope.parameter = noun;
+    console.log(noun.pos);
+    if($scope.isNextTable(noun.word)){
+      $scope.table = noun.word;
+    }
+    if(noun.pos == "name") {
+      $scope.parameter = noun.word;
     }
   }
 
@@ -120,6 +140,10 @@ speechlessApp.controller('mainController', function($scope, $http) {
   }
 
   $scope.createLink = function() {
-    $scope.modifiedLink = $scope.link + $scope.parameter;
+    if($scope.parameter == ""){
+      $scope.modifiedLink = $scope.link + $scope.table;
+    } else {
+      $scope.modifiedLink = $scope.link + $scope.table + "?=" + $scope.parameter;
+    }
   }
 });
