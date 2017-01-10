@@ -33,6 +33,24 @@ speechlessApp.controller('mainController', function($scope, $http) {
         "pt": "n",
         "rel": "obj1",
         "pos": "name",
+      },
+      {
+        "word": "met",
+        "pt": "vz",
+        "rel": "hd",
+        "pos": "prep",
+      },
+      {
+        "word": "naam",
+        "pt": "n",
+        "rel": "hd",
+        "pos": "noun",
+      },
+      {
+        "word": "Jansen",
+        "pt": "n",
+        "rel": "app",
+        "pos": "name",
       }
     ]
   };
@@ -56,7 +74,7 @@ speechlessApp.controller('mainController', function($scope, $http) {
 
   $scope.method = ""
   $scope.table = ""
-  $scope.parameter = ""
+  $scope.parameters = []
   $scope.link = "dhh.whatsnext.nl/"
 
   $scope.init = function() {
@@ -90,6 +108,7 @@ speechlessApp.controller('mainController', function($scope, $http) {
 
   $scope.parseResponse = function(response) {
     console.log(response);
+    $scope.parameters = [];
     var words = response.words;
     angular.forEach(words, function(value, key) {
       switch(value.pt) {
@@ -114,12 +133,11 @@ speechlessApp.controller('mainController', function($scope, $http) {
   }
 
   $scope.detectNoun = function(noun) {
-    console.log(noun.pos);
     if($scope.isNextTable(noun.word)){
       $scope.table = noun.word;
     }
     if(noun.pos == "name") {
-      $scope.parameter = noun.word;
+      $scope.parameters.push(noun.word);
     }
   }
 
@@ -140,10 +158,17 @@ speechlessApp.controller('mainController', function($scope, $http) {
   }
 
   $scope.createLink = function() {
-    if($scope.parameter == ""){
-      $scope.modifiedLink = $scope.link + $scope.table;
-    } else {
-      $scope.modifiedLink = $scope.link + $scope.table + "?=" + $scope.parameter;
+    $scope.modifiedLink = $scope.link + $scope.table;
+    var length = $scope.parameters.length;
+    if(length > 0) {
+      $scope.modifiedLink = $scope.modifiedLink + "?w=";
+      angular.forEach($scope.parameters, function(value, index){
+        if((index+1) == length){
+          $scope.modifiedLink = $scope.modifiedLink + value;
+        } else {
+          $scope.modifiedLink = $scope.modifiedLink + value + "+";
+        }
+      })
     }
   }
 });
