@@ -91,7 +91,7 @@
         $scope.method = ""
         $scope.table = ""
         $scope.parameters = []
-        $scope.link = "dhh.whatsnext.nl/"
+        $scope.link = "jho.whatsnext.afasgroep.nl/"
 
         $scope.init = function() {
             if (annyang) {
@@ -155,7 +155,7 @@
 
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
-                $scope.table = noun.word;
+                $scope.table = noun.root;
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);

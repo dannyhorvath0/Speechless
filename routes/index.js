@@ -29,7 +29,7 @@ router.get('/text?*', function(req, res, next) {
 function makeArray(json, nWords, resArr){
     if(json.node == undefined){
         if(json.word != undefined){
-            var obj = {word: json.word, pt: json.pt, pos: json.pos};
+            var obj = {word: json.word, pt: json.pt, pos: json.pos, root: json.root};
             resArr.push(obj);
         }
         if(resArr.length == nWords){
