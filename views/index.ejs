@@ -190,7 +190,7 @@
         }
 
         $scope.createLink = function() {
-            $scope.modifiedLink = $scope.link + $scope.table;
+            $scope.modifiedLink = $scope.link + $scope.table + "list";
             var length = $scope.parameters.length;
             if(length > 0) {
                 $scope.modifiedLink = $scope.modifiedLink + "?=";
