@@ -144,7 +144,7 @@
             $scope.createLink();
             if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
-                $window.open($scope.modifiedLink, '_blank');
+                $scope.redirected();
             }
         }
 
@@ -153,6 +153,10 @@
                 $scope.method = "SELECT";
             }
         }
+
+        $scope.redirected = function(){
+            $window.open($scope.modifiedLink, '_blank');
+        };
 
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
