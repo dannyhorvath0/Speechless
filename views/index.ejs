@@ -144,9 +144,7 @@
             $scope.createLink();
             if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
-                $scope.redirected = function(){
-                    $window.open($scope.modifiedLink, '_blank');
-                };
+                $window.open($scope.modifiedLink, '_blank');
             }
         }
 
