@@ -26,7 +26,7 @@
       </div>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#" target="_blank"><i class="fa fa-home"></i> Home</a></li>
       </ul>
     </div>
   </nav>
@@ -190,7 +190,7 @@
         }
 
         $scope.createLink = function() {
-            $scope.modifiedLink = $scope.link + $scope.table + "list";
+            $scope.modifiedLink = "http://" + $scope.link + $scope.table + "list";
             var length = $scope.parameters.length;
             if(length > 0) {
                 $scope.modifiedLink = $scope.modifiedLink + "?=";
