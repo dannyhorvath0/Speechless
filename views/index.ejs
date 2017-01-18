@@ -53,7 +53,7 @@
     //Create the module
     var speechlessApp = angular.module('speechlessApp', []);
     //Create controller and inject Angular's $scope
-    speechlessApp.controller('mainController', function($scope, $http) {
+    speechlessApp.controller('mainController', function($scope, $window) {
 
         var showSynonym = [
             'geef',
@@ -144,6 +144,9 @@
             $scope.createLink();
             if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
+                $scope.redirected = function(){
+                    $window.open($scope.modifiedLink, '_blank');
+                };
             }
         }
 
