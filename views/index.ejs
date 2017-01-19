@@ -255,6 +255,7 @@
             } else if ($scope.parseFunction == "query") {
                 console.log("Query parse'")
                 $scope.getQuery();
+                annyang.abort();
             }
         };
 
