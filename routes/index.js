@@ -15,16 +15,14 @@ router.get('/', function(req, res, next) {
         res.render('index', { title: "test" });
 });
 /* GET from next */
-router.get('/request?*', function(req, res, next) {
-    console.log(req.query.q);
+router.post('/request?*', function(req, res, next) {
+    console.log(req.body.query);
     console.log('--------------------------');
 
-    request.get("http://"+req.query.q, function (error, response, body) {
+    request.get("http://"+req.body.query, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.send({ "items" : makeArray(body)}); // Show the HTML for the Google homepage.
         }
-        console.log(response);
-        console.log(body);
         console.log(error);
     });
 });

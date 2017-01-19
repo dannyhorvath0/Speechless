@@ -280,7 +280,7 @@
                 }
             }
             console.log(query);
-            $.get("/request?q=" + query, function (data) {
+            $.post("/request", {query: query}, function (data) {
                 console.log(data);
             });
         }
