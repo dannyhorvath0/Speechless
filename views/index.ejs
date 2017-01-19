@@ -228,6 +228,14 @@
             }
         };
 
+        $scope.isNameParameter = function(noun) {
+            if(nameSynonym.indexOf(noun) >-1){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
         $scope.isNextTable = function(noun) {
             if(nextTables.indexOf(noun) > -1){
                 return true;
