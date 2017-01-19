@@ -175,7 +175,7 @@
         $scope.redirected = function(){
             console.log($scope.link);
             console.log($scope.modifiedLink);
-            if($scope.link != "") {
+            if($scope.modifiedLink != "") {
                 $window.open($scope.modifiedLink, '_blank');
             }
         };
@@ -184,7 +184,8 @@
             if($scope.isNextTable(noun.word)){
                 var root = noun.root;
                 root.replace('_', '');
-                $scope.table = (root);
+                $scope.table = root;
+                console.log($scope.table);
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);
