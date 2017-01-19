@@ -355,6 +355,7 @@
             }
             console.log(query);
             $.post("/request", {query: query}, function (data) {
+                console.log(data);
                 if(data != undefined || data != null) {
                     var html = '<table class="table"><thead><tr>';
                     for (var i = 0; i < 1; i++) {
