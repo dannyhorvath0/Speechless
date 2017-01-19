@@ -65,6 +65,8 @@
             'beschrijf'
         ]
 
+        var minnaressen = 'Eva van Luuk'
+
         var nextTables = [
             "klanten",
             "producten",
@@ -101,6 +103,9 @@
                             //$('#text').html(JSON.stringify(data, 4, null));
                             $scope.parseResponse(data);
                         });
+                    }
+                    'Hoeveel minnaressen heeft Bas van der Veldt': function() {
+                        $('#text').text(minnaressen);
                     }
                 };
                 //Turn on debug
