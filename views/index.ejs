@@ -180,7 +180,7 @@
 
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
-                $scope.table = (noun.root.replace(/[^\w\s]/gi, ''));
+                $scope.table = (noun.root.replace(/[^\w\s]_/gi, ''));
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);
@@ -217,19 +217,19 @@
         $scope.createLink = function() {
             if($scope.table != "") {
                 $scope.modifiedLink = "http://" + $scope.link + $scope.table + "list";
+                var length = $scope.parameters.length;
+                if (length > 0) {
+                    $scope.modifiedLink = $scope.modifiedLink + "?=";
+                    angular.forEach($scope.parameters, function (value, index) {
+                        if ((index + 1) == length) {
+                            $scope.modifiedLink = $scope.modifiedLink + value;
+                        } else {
+                            $scope.modifiedLink = $scope.modifiedLink + value + "&";
+                        }
+                    })
+                }
             } else {
                 $('#text').text("Sorry er is geen data gevonden");
-            }
-            var length = $scope.parameters.length;
-            if(length > 0) {
-                $scope.modifiedLink = $scope.modifiedLink + "?=";
-                angular.forEach($scope.parameters, function(value, index){
-                    if((index+1) == length){
-                        $scope.modifiedLink = $scope.modifiedLink + value;
-                    } else {
-                        $scope.modifiedLink = $scope.modifiedLink + value + "&";
-                    }
-                })
             }
         };
     });
