@@ -207,7 +207,7 @@
             if($scope.isNextTable(noun.word)){
                 var root = noun.root;
                 var stripped_root = root.replace('_', '');
-                stripped_root = stripped_root.charAt(0).toUpperCase();
+                stripped_root.charAt(0).toUpperCase();
                 $scope.table = stripped_root;
             }
             if(noun.pos == "name") {
