@@ -28,7 +28,7 @@
     <div class="row">
           <center>
             <h4>Waar bent u naar opzoek?</h4>
-            <i ng-click="recordSpeech('list')" class="fa fa-microphone fa-4 button" id="mic" onclick="micClick()" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+            <i ng-click="recordSpeech('list')" class="fa fa-microphone fa-4 button" id="micl" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
             <div><a href="{{modifiedLink}}" id="text"></a></div>
           </center>
     </div>
@@ -40,7 +40,8 @@
     <div class="row">
         <center>
           <h4>Waar bent u naar opzoek?</h4>
-          <i ng-click="recordSpeech('query')" class="fa fa-microphone fa-4 button" id="mic" onclick="micClick()" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+          <i ng-click="recordSpeech('query')" class="fa fa-microphone fa-4 button" id="micq" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+          <div id="textquery"></div>
         </center>
     </div>
   </div>
@@ -368,7 +369,7 @@
                     html += '</tr>';
                   }
                     html += '</tbody></table>';
-                 $('#text').html(html);
+                 $('#textquery').html(html);
             });
         }
     });
@@ -422,10 +423,12 @@
   function micClick(){
       console.log("test");
       if(mic1 == 0){
-          $('#mic').css('color', '#f00');
+          $('#micq').css('color', '#f00');
+          $('#micl').css('color', '#f00');
           mic1++;
       }else{
-          $('#mic').css('color', '#005fab');
+          $('#micq').css('color', '#005fab');
+          $('#micl').css('color', '#005fab');
           mic1 = 0;
       }
   }
