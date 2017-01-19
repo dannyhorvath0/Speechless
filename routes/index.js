@@ -16,7 +16,10 @@ router.get('/', function(req, res, next) {
 });
 /* GET from next */
 router.get('/request?*', function(req, res, next) {
-    request("http://"+req.query.q, function (error, response, body) {
+    console.log(req.query.q);
+    console.log('--------------------------');
+
+    request("http://google.nl", function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.send({ "items" : makeArray(body)}); // Show the HTML for the Google homepage.
         }
