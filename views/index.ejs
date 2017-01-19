@@ -355,7 +355,7 @@
             }
             console.log(query);
             $.post("/request", {query: query}, function (data) {
-                if(data != undefined) {
+                if(data != undefined || data != null) {
                     var html = '<table class="table"><thead><tr>';
                     for (var i = 0; i < 1; i++) {
                         html += '<th>' + Object.keys(data[0])[i] + '</th>';
