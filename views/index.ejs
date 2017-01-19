@@ -40,7 +40,7 @@
         <div class="col-md-2 col-md-offset-5">
           <center>
             <h4>Spreek wat in voor lijsten!</h4>
-            <i ng-click="recordSpeech()" class="fa fa-microphone fa-4 button" id="mic" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+            <i ng-click="recordSpeech('list')" class="fa fa-microphone fa-4 button" class="mic" id="list" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
             <div><a href="{{modifiedLink}}" id="text"></a></div>
           </center>
         </div>
@@ -49,7 +49,7 @@
         <div class="col-md-2 col-md-offset-5">
             <center>
                 <h4>Spreek wat in voor queries!</h4>
-                <i ng-click="recordSpeech()" class="fa fa-microphone fa-4 button" id="mic" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+                <i ng-click="recordSpeech('query')" class="fa fa-microphone fa-4 button" class="mic" id="query" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
                 <div><a href="{{modifiedLink}}" id="text"></a></div>
             </center>
         </div>
@@ -62,7 +62,7 @@
     //Create the module
     var speechlessApp = angular.module('speechlessApp', []);
     //Create controller and inject Angular's $scope
-    speechlessApp.controller('mainController', function($scope, $window) {
+    speechlessApp.controller('mainController', function($scope, $window, $http) {
 
         var showSynonym = [
             'geef',
@@ -74,6 +74,12 @@
             'beschrijf'
         ];
 
+        var nameSynonym = [
+            'naam',
+            'titel',
+            'omschrijving'
+        ];
+
         var minnaressen = 'Eva van Luuk';
 
         var nextTables = [
@@ -81,7 +87,8 @@
             "producten",
             "medewerkers",
             "leveranciers",
-            "verkooporders"
+            "verkooporders",
+            "organisaties"
         ];
 
         var months = [
@@ -103,6 +110,8 @@
         $scope.table = "";
         $scope.parameters = [];
         $scope.link = "jho.whatsnext.afasgroep.nl/";
+        $scope.parseFunction = "";
+        $scope.parameterType = "";
 
         $scope.init = function() {
             if (annyang) {
@@ -112,7 +121,6 @@
                             $('#text').text(minnaressen);
                         } else {
                             $.get("/text?t=" + text, function (data) {
-                                //$('#text').html(JSON.stringify(data, 4, null));
                                 $scope.parseResponse(data);
                             });
                         }
@@ -129,14 +137,15 @@
             }
         };
 
-        $scope.recordSpeech = function() {
+        $scope.recordSpeech = function(parseFunction) {
             if (annyang) {
+                $scope.parseFunction = parseFunction;
                 if(annyang.isListening()) {
                     annyang.abort();
-                    $('#mic').css({color: "black"});
+                    $('.mic').css({color: "black"});
                 } else {
                     annyang.resume();
-                    $('#mic').css({color: "red"});
+                    $('.mic').css({color: "red"});
                 }
             }
         };
@@ -158,12 +167,19 @@
                         break;
                 }
             });
-            $scope.createLink();
+            console.log($scope.parseFunction);
+            if($scope.parseFunction == "list") {
+                console.log("List parse")
+                $scope.createLink();
+            } else if ($scope.parseFunction == "query") {
+                console.log("Query parse'")
+                $scope.getQuery();
+            }
             if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
                 $scope.redirected();
                 annyang.abort();
-                $('#mic').css({color: "black"});
+                $('.mic').css({color: "black"});
                 $scope.resetVariables();
             }
         };
@@ -182,8 +198,6 @@
         };
 
         $scope.redirected = function(){
-            console.log($scope.link);
-            console.log($scope.modifiedLink);
             if($scope.modifiedLink) {
                 $window.open($scope.modifiedLink, '_blank');
             }
@@ -194,13 +208,15 @@
                 var root = noun.root;
                 var stripped_root = root.replace('_', '');
                 $scope.table = stripped_root;
-                console.log($scope.table);
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);
             }
             if($scope.isMonth(noun.word)){
                 $scope.parameters.push(noun.word);
+            }
+            if($scope.isNameParameter(noun.word)){
+                $scope.parameterType = "Omschrijving";
             }
         };
 
@@ -244,6 +260,28 @@
                 }
             }
         };
+
+        $scope.getQuery = function() {
+            var url = $scope.link + "Imp/QueryModelObjects/" + $scope.table + "/" + $scope.table + "CurrentGetItemsQuery.query?";
+            if($scope.parameterType) {
+                if($scope.parameterType != ""){
+                    var filter = "Filter=contains(" + $scope.parameterType + "%2C'" + $scope.parameters[0] + "')";
+                    var queryParams = "&skip=0&take=50&sortColumn=" + $scope.parameterType + "&sortType=Ascending";
+                    var query = url + filter + queryParams;
+                }
+            }
+            console.log(query);
+            $http({
+                method: 'GET',
+                url: query
+            }).then(function succesCallback(response) {
+                console.log(response);
+                console.log("Success callback");
+            }, function errorCallback(response) {
+                console.log(response);
+                console.log("Error callback");
+            });
+        }
     });
 </script>
 
