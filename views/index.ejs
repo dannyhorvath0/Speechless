@@ -40,7 +40,7 @@
         <div class="col-md-2 col-md-offset-5">
           <center>
             <h4>Spreek wat in!</h4>
-            <i ng-click="recordSpeech()" class="fa fa-microphone fa-4 button" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+            <i ng-click="recordSpeech()" class="fa fa-microphone fa-4 button" id="mic" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
             <div><a href="{{modifiedLink}}" id="text"></a></div>
           </center>
         </div>
@@ -118,10 +118,10 @@
             if (annyang) {
                 if(annyang.isListening()) {
                     annyang.pause();
-                    $('#text').css({color: "black"});
+                    $('#mic').css({color: "black"});
                 } else {
                     annyang.resume();
-                    $('#text').css({color: "red"});
+                    $('#mic').css({color: "red"});
                 }
             }
         };
