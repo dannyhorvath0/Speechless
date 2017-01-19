@@ -16,14 +16,10 @@ router.get('/', function(req, res, next) {
 });
 /* GET from next */
 router.post('/request?*', function(req, res, next) {
-    console.log(req.body.query);
-    console.log('--------------------------');
-
     request.get("http://"+req.body.query, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.send({ "items" : body}); // Show the HTML for the Google homepage.
+            res.render('list', { title: "Profit Next - List", data: JSON.parse(body)});
         }
-        console.log(error);
     });
 });
 
