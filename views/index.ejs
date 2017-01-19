@@ -175,7 +175,7 @@
         $scope.redirected = function(){
             console.log($scope.link);
             console.log($scope.modifiedLink);
-            if($scope.modifiedLink != "") {
+            if($scope.modifiedLink) {
                 $window.open($scope.modifiedLink, '_blank');
             }
         };
