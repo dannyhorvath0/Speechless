@@ -173,6 +173,8 @@
         };
 
         $scope.redirected = function(){
+            console.log($scope.link);
+            console.log($scope.modifiedLink);
             if($scope.link != "") {
                 $window.open($scope.modifiedLink, '_blank');
             }
@@ -180,7 +182,9 @@
 
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
-                $scope.table = (noun.root.replace(/[^\w\s]_/gi, ''));
+                var root = noun.root;
+                root.replace('_', '');
+                $scope.table = (root);
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);
