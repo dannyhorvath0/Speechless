@@ -249,6 +249,7 @@
                 $scope.createLink();
                 if($scope.modifiedLink != $scope.link){
                     $('#text').text($scope.modifiedLink);
+                    micClick();
                     $scope.redirected();
                     annyang.abort();
                     $scope.resetVariables();
