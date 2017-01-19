@@ -63,9 +63,9 @@
             'bekijk',
             'genereer',
             'beschrijf'
-        ]
+        ];
 
-        var minnaressen = 'Eva van Luuk'
+        var minnaressen = 'Eva van Luuk';
 
         var nextTables = [
             "klanten",
@@ -73,7 +73,7 @@
             "medewerkers",
             "leveranciers",
             "verkooporders"
-        ]
+        ];
 
         var months = [
             "januari",
@@ -88,12 +88,12 @@
             "oktober",
             "november",
             "december"
-        ]
+        ];
 
-        $scope.method = ""
-        $scope.table = ""
-        $scope.parameters = []
-        $scope.link = "jho.whatsnext.afasgroep.nl/"
+        $scope.method = "";
+        $scope.table = "";
+        $scope.parameters = [];
+        $scope.link = "jho.whatsnext.afasgroep.nl/";
 
         $scope.init = function() {
             if (annyang) {
@@ -155,7 +155,15 @@
                 $scope.redirected();
                 annyang.abort();
                 $('#mic').css({color: "black"});
+                $scope.resetVariables();
             }
+        };
+
+        $scope.resetVariables = function() {
+            $scope.method = "";
+            $scope.table = "";
+            $scope.parameters = [];
+
         };
 
         $scope.detectVerb = function(verb) {
@@ -170,7 +178,7 @@
 
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
-                $scope.table = noun.root;
+                $scope.table = noun.root.replace(/[^\w\s]/gi, '');
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);
