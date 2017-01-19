@@ -20,6 +20,7 @@ router.get('/request?*', function(req, res, next) {
         if (!error && response.statusCode == 200) {
             res.send({ "items" : makeArray(body)}); // Show the HTML for the Google homepage.
         }
+        console.log(error);
     });
 });
 
