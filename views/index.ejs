@@ -122,11 +122,12 @@
 
         $scope.recordSpeech = function() {
             if (annyang) {
-                $scope.setMicColor();
                 if(annyang.isListening()) {
                     annyang.abort();
+                    $('#mic').css({color: "black"});
                 } else {
                     annyang.resume();
+                    $('#mic').css({color: "red"});
                 }
             }
         };
@@ -149,11 +150,12 @@
                 }
             });
             $scope.createLink();
-            if($scope.modifiedLink != $scope.link + "list"){
+            $scope.link += "list";
+            if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
                 $scope.redirected();
                 annyang.abort();
-                $scope.setMicColor();
+                $('#mic').css({color: "black"});
             }
         };
 
@@ -162,14 +164,6 @@
                 $scope.method = "SELECT";
             }
         };
-
-        $scope.setMicColor = function() {
-            if(annyang.isListening()) {
-                $('#mic').css({color: "red"})
-            } else {
-                $('#mic').css({color: "black"})
-            }
-        }
 
         $scope.redirected = function(){
             $window.open($scope.modifiedLink, '_blank');
