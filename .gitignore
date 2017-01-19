@@ -1,6 +1,4 @@
 
-.idea/compiler.xml
+.idea
 
-.idea/copyright/profiles_settings.xml
-
-.idea/misc.xml
+node_modules
