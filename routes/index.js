@@ -4,7 +4,7 @@ var router = express.Router();
 
 var exec = require('child_process').exec;
 var parser = require('xml2json');
-var reqeuest = require('request');
+var request = require('request');
 
 /*
    $ALPINO_HOME/bin/Alpino -notk -veryfast user_max=20000   server_kind=parse   server_port=11211   assume_input_is_tokenized=on   debug=0   -init_dict_p   batch_command=alpino_server
