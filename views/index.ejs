@@ -183,8 +183,8 @@
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
                 var root = noun.root;
-                root.replace('_', '');
-                $scope.table = root;
+                var stripped_root = root.replace('_', '');
+                $scope.table = stripped_root;
                 console.log($scope.table);
             }
             if(noun.pos == "name") {
