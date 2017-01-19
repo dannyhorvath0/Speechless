@@ -122,12 +122,11 @@
 
         $scope.recordSpeech = function() {
             if (annyang) {
+                $scope.setMicColor();
                 if(annyang.isListening()) {
                     annyang.abort();
-                    $('#mic').css({color: "black"});
                 } else {
                     annyang.resume();
-                    $('#mic').css({color: "red"});
                 }
             }
         };
@@ -150,17 +149,25 @@
                 }
             });
             $scope.createLink();
-            if($scope.modifiedLink != $scope.link){
+            if($scope.modifiedLink != $scope.link + "list"){
                 $('#text').text($scope.modifiedLink);
                 $scope.redirected();
                 annyang.abort();
-                $('#mic').css({color: "black"});
+                $scope.setMicColor();
             }
         };
 
         $scope.detectVerb = function(verb) {
             if($scope.isShowVerb(verb)){
                 $scope.method = "SELECT";
+            }
+        };
+
+        $scope.setMicColor = function() {
+            if(annyang.isListening()) {
+                $('#mic').css({color: "red"})
+            } else {
+                $('#mic').css({color: "black"})
             }
         }
 
