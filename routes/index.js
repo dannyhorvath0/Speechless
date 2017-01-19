@@ -21,7 +21,7 @@ router.post('/request?*', function(req, res, next) {
 
     request.get("http://"+req.body.query, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.send({ "items" : makeArray(body)}); // Show the HTML for the Google homepage.
+            res.send({ "items" : body}); // Show the HTML for the Google homepage.
         }
         console.log(error);
     });
