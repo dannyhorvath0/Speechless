@@ -167,20 +167,19 @@
                         break;
                 }
             });
-            console.log($scope.parseFunction);
             if($scope.parseFunction == "list") {
                 console.log("List parse")
                 $scope.createLink();
+                if($scope.modifiedLink != $scope.link){
+                    $('#text').text($scope.modifiedLink);
+                    $scope.redirected();
+                    annyang.abort();
+                    $('.mic').css({color: "black"});
+                    $scope.resetVariables();
+                }
             } else if ($scope.parseFunction == "query") {
                 console.log("Query parse'")
                 $scope.getQuery();
-            }
-            if($scope.modifiedLink != $scope.link){
-                $('#text').text($scope.modifiedLink);
-                $scope.redirected();
-                annyang.abort();
-                $('.mic').css({color: "black"});
-                $scope.resetVariables();
             }
         };
 
