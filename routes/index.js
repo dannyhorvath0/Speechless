@@ -4,6 +4,7 @@ var router = express.Router();
 
 var exec = require('child_process').exec;
 var parser = require('xml2json');
+var reqeuest = require('request');
 
 /*
    $ALPINO_HOME/bin/Alpino -notk -veryfast user_max=20000   server_kind=parse   server_port=11211   assume_input_is_tokenized=on   debug=0   -init_dict_p   batch_command=alpino_server
@@ -12,6 +13,14 @@ var parser = require('xml2json');
 /* GET home page. */
 router.get('/', function(req, res, next) {
         res.render('index', { title: "test" });
+});
+/* GET from next */
+router.get('/request?*', function(req, res, next) {
+    request(req.query.q, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.send({ "items" : makeArray(body)}); // Show the HTML for the Google homepage.
+        }
+    }
 });
 
 router.get('/text?*', function(req, res, next) {

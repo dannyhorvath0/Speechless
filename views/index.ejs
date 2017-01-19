@@ -160,7 +160,7 @@
                         $scope.detectVerb(angular.lowercase(value.word));
                         break;
                     case "n":
-                        $scope.detectNoun(angular.lowercase(value));
+                        $scope.detectNoun(value); //lowercase ?
                         break;
                     case "tw":
                         $scope.parameters.push(value.word);
@@ -279,15 +279,8 @@
                 }
             }
             console.log(query);
-            $http({
-                method: 'GET',
-                url: query
-            }).then(function succesCallback(response) {
-                console.log(response);
-                console.log("Success callback");
-            }, function errorCallback(response) {
-                console.log(response);
-                console.log("Error callback");
+            $.get("/request?q=" + query, function (data) {
+                console.log(data);
             });
         }
     });
