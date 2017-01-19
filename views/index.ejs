@@ -6,56 +6,132 @@
   <!-- load bootstrap and fontawesome via CDN -->
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title><%= title %></title>
   <!-- SPELLS -->
   <!-- load angular and angular route via CDN -->
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+
 </head>
 <body ng-controller="mainController" data-ng-init="init()">
+
+<div class="scroll" onclick="scrolling()">
+  <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+</div>
+
+<div id="mic1" style="display:none;">
+  <div class="container">
+    <div class="row">
+          <center>
+            <h4>Waar bent u naar opzoek?</h4>
+            <i ng-click="recordSpeech('list')" class="fa fa-microphone fa-4 button" class="mic" id="iconmic1" onclick="micClick(1)" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+            <div><a href="{{modifiedLink}}" id="text"></a></div>
+          </center>
+    </div>
+  </div>
+</div>
+
+<div id="mic2" style="display:none;">
+  <div class="container">
+    <div class="row">
+        <center>
+          <h4>Waar bent u naar opzoek?</h4>
+          <i ng-click="recordSpeech('query')" class="fa fa-microphone fa-4 button" class="mic" id="iconmic2" onclick="micClick(2)" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+        </center>
+    </div>
+  </div>
+</div>
+
 
 <!-- HEADER AND NAVBAR -->
 <header>
   <nav class="navbar navbar-default">
-    <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">Speechless</a>
+        <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" target="_blank"><i class="fa fa-home"></i> Home</a></li>
+        <i class="fa fa-search" aria-hidden="true"></i> |
+        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
       </ul>
-    </div>
   </nav>
 </header>
 
 <!-- MAIN CONTENT AND INJECTED VIEWS -->
 <div id="main">
-  <div class="jumbotron">
+  <div id="welkom">
+        <center>
+          <img src="/images/welkom.jpg" width="100%" />
+        </center>
+  </div>
+
+  <div id="voorstellen">
     <div class="container">
       <div class="row">
-        <div class="col-md-2 col-md-offset-5">
+        <div class="col-md-4">
           <center>
-            <h4>Spreek wat in voor lijsten!</h4>
-            <i ng-click="recordSpeech('list')" class="fa fa-microphone fa-4 button" class="mic" id="list" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
-            <div><a href="{{modifiedLink}}" id="text"></a></div>
+            <img src="/images/jappie.png" width="70%"/>
+            <h3>Jasper Hoogendoorn</h3>
           </center>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-5">
-            <center>
-                <h4>Spreek wat in voor queries!</h4>
-                <i ng-click="recordSpeech('query')" class="fa fa-microphone fa-4 button" class="mic" id="query" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
-                <div><a href="{{modifiedLink}}" id="text"></a></div>
-            </center>
+        <div class="col-md-4">
+          <center>
+            <img src="/images/deDan.png" width="70%"/>
+            <h3>Danny Horvath</h3>
+          </center>
+        </div>
+        <div class="col-md-4">
+          <center>
+            <img src="/images/luuk.png" width="70%"/>
+            <h3>Luuk Maters</h3>
+          </center>
         </div>
       </div>
     </div>
   </div>
+
+  <div id="nieuweTechnieken">
+    <div class="container">
+        <center>
+          <h2>Filmpje introductie nieuwe technieken</h2>
+        </center>
+    </div>
+  </div>
+
+  <div id="introOnderwerp">
+    <div class="container">
+        <center>
+          <h2>Filmpje introductie onderwerp</h2>
+        </center>
+    </div>
+  </div>
+
+  <div id="infografic">
+    <div class="container">
+      <img src="/images/info.jpg" width="100%" />
+    </div>
+  </div>
+
+  <div id="demo">
+    <div class="container">
+        <center>
+          <img src="/images/demo.jpg" width="100%" />
+        </center>
+    </div>
+  </div>
+
+  <div id="conclusie">
+    <div class="container">
+        <center>
+          <img src="/images/conclusie.jpg" width="100%" />
+        </center>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -141,11 +217,11 @@
             if (annyang) {
                 $scope.parseFunction = parseFunction;
                 if(annyang.isListening()) {
+
                     annyang.abort();
-                    $('.mic').css({color: "black"});
                 } else {
+
                     annyang.resume();
-                    $('.mic').css({color: "red"});
                 }
             }
         };
@@ -174,7 +250,6 @@
                     $('#text').text($scope.modifiedLink);
                     $scope.redirected();
                     annyang.abort();
-                    $('.mic').css({color: "black"});
                     $scope.resetVariables();
                 }
             } else if ($scope.parseFunction == "query") {
@@ -284,6 +359,66 @@
             });
         }
     });
+</script>
+
+<script>
+  var sp = 0;
+  var n = 0;
+    $(window).keypress(function (e) {
+        if (e.keyCode === 0 || e.keyCode === 32) {
+            e.preventDefault();
+            if(sp == 0){
+                sp++;
+                $('#mic1').show();
+                $('#mic2').hide();
+            }else{
+                sp--;
+                $('#mic1').hide();
+            }
+        }else if(e.keyCode === 110 || e.keyCode === 78){
+            e.preventDefault();
+            if(n == 0){
+                n++;
+                $('#mic2').show();
+                $('#mic1').hide();
+            }else{
+                n--;
+                $('#mic2').hide();
+            }
+        }
+    });
+</script>
+<script>
+  var i = 0;
+  var parts = ["welkom","voorstellen", "nieuweTechnieken", "introOnderwerp", "infografic", "demo", "conclusie"];
+
+  function scrolling(){
+      console.log("i: "+i+" - parts: "+parts.length);
+      $('html,body').animate({
+          scrollTop: $("#"+parts[i]).offset().top-54
+      });
+      if(i == parts.length -1){
+        i = 0;
+      }else{
+          i++;
+      }
+  }
+</script>
+<script>
+  var mic1 = 0;
+  var mic2 = 0;
+  function micClick(mic){
+      if(mic1 == 0 && mic2 == 0){
+          $('#iconmic'+mic).css('color', '#f00');
+          mic1++;
+          mic2++;
+      }else{
+          $('#iconmic'+mic).css('color', '#005fab');
+          mic1 = 0;
+          mic2 = 0;
+      }
+
+  }
 </script>
 
 </body>

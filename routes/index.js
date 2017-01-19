@@ -39,6 +39,10 @@ router.get('/text?*', function(req, res, next) {
     });
 });
 
+router.get('/list', function(req, res, next) {
+    res.render('list', { title: "Profit Next - List", data: JSON.parse('[{"Omschrijving":"Achmea","IsGoederenstroomadministratie":false,"IsLeverancier":false,"IsFinancieleAdministratie":false,"IsKlant":true,"VerantwoordelijkeDescription":"","FunctionalState":0,"KlantMain":{"Id":"8748310d-428f-4dd7-8e03-a62a763d2fcf","ComponentId":"1f0fbbf3-bb59-4ff1-8712-1e7087e09895"},"TTStart":"2017-01-19T12:54:43.395Z","Id":"58a6130d-dd3a-4ce2-82ea-7853fb5dcdfd","InstanceId":"e3af9a1f-6e9a-44fe-ac0d-3c5fe5d5b6b9"}]')});
+});
+
 function makeArray(json, nWords, resArr){
     if(json.node == undefined){
         if(json.word != undefined){

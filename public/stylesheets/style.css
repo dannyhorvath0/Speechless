@@ -1,8 +1,91 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+
+body{
+  font: 15px/24px 'Roboto Slab', serif;
+  color: #005fab;
 }
 
-a {
-  color: #00B7FF;
+#main div{
+  min-height:700px;
 }
+.navbar{
+  background: rgb(41, 65, 81) none repeat scroll 0 0;
+  border-radius: 0px;
+}
+
+#voorstellen, #nieuweTechnieken, #introOnderwerp{
+  padding-top:60px;
+}
+
+#main {
+  padding-top: 92px;
+}
+
+.scroll .fa.fa-arrow-circle-down {
+  font-size: 28px;
+  margin: 11px 13px;
+}
+
+.fa.fa-bars {
+  color: #fff;
+  font-size: 26px;
+  margin: 14px 30px;
+}
+
+.navbar-right {
+  color: #fff;
+  font-size: 24px;
+  margin: 10px 30px;
+}
+
+.navbar-right i{
+  margin: 0px 15px;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+#mic1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background: #fff;
+  z-index: 9999;
+  display:none;
+  opacity: 0.95;
+  padding-top: 200px;
+}
+
+#mic2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background: #fff;
+  z-index: 9999;
+  display:none;
+  opacity: 0.95;
+  padding-top: 200px;
+}
+
+.scroll {
+  background: rgb(41, 65, 81) none repeat scroll 0 0;
+  border-radius: 90px;
+  bottom: 10px;
+  color: #fff;
+  height: 50px;
+  position: fixed;
+  right: 10px;
+  width: 50px;
+  z-index: 9999;
+}
+
+
