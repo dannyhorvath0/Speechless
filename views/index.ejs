@@ -157,8 +157,6 @@
             'omschrijving'
         ];
 
-        var minnaressen = 'Eva van Luuk';
-
         var nextTables = [
             "klanten",
             "producten",
@@ -195,7 +193,7 @@
                 var commands = {
                     '*text': function(text) {
                         if(text == "Hoeveel minnaressen heeft Bas van der Veldt"){
-                            $('#text').text(minnaressen);
+                            $('#textquery').text("69");
                         } else {
                             $.get("/text?t=" + text, function (data) {
                                 $scope.parseResponse(data);
@@ -357,20 +355,22 @@
             }
             console.log(query);
             $.post("/request", {query: query}, function (data) {
-                var html = '<table class="table"><thead><tr>';
-                  for(var i=0; i<1; i++){
-                    html += '<th>'+ Object.keys(data[0])[i] +'</th>';
-                  }
-                    html += '</tr></thead><tbody>';
-                  for(var i in data){
-                    html += '<tr>';
-                    for(var j=0; j<1; j++){
-                      html += '<td>'+ data[i][Object.keys(data[0])[j]] +'</td>';
+                if(data) {
+                    var html = '<table class="table"><thead><tr>';
+                    for (var i = 0; i < 1; i++) {
+                        html += '<th>' + Object.keys(data[0])[i] + '</th>';
                     }
-                    html += '</tr>';
-                  }
+                    html += '</tr></thead><tbody>';
+                    for (var i in data) {
+                        html += '<tr>';
+                        for (var j = 0; j < 1; j++) {
+                            html += '<td>' + data[i][Object.keys(data[0])[j]] + '</td>';
+                        }
+                        html += '</tr>';
+                    }
                     html += '</tbody></table>';
-                 $('#textquery').html(html);
+                    $('#textquery').html(html);
+                }
             });
         }
     });
