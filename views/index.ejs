@@ -173,12 +173,14 @@
         };
 
         $scope.redirected = function(){
-            $window.open($scope.modifiedLink, '_blank');
+            if($scope.link != "") {
+                $window.open($scope.modifiedLink, '_blank');
+            }
         };
 
         $scope.detectNoun = function(noun) {
             if($scope.isNextTable(noun.word)){
-                $scope.table = noun.root.replace(/[^\w\s]/gi, '');
+                $scope.table = (noun.root.replace(/[^\w\s]/gi, ''));
             }
             if(noun.pos == "name") {
                 $scope.parameters.push(noun.word);
