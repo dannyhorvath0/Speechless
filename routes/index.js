@@ -13,7 +13,7 @@ var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-        res.render('index', { title: "test" });
+        res.render('index', { title: "Profit Next" });
 });
 /* GET from next */
 router.post('/request?*', function(req, res, next) {
