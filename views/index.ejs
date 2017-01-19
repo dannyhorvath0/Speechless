@@ -150,7 +150,6 @@
                 }
             });
             $scope.createLink();
-            $scope.link += "list";
             if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
                 $scope.redirected();
@@ -206,7 +205,11 @@
         };
 
         $scope.createLink = function() {
-            $scope.modifiedLink = "http://" + $scope.link + $scope.table + "list";
+            if($scope.table != "") {
+                $scope.modifiedLink = "http://" + $scope.link + $scope.table + "list";
+            } else {
+                $('#text').text("Sorry er is geen data gevonden");
+            }
             var length = $scope.parameters.length;
             if(length > 0) {
                 $scope.modifiedLink = $scope.modifiedLink + "?=";
