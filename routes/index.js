@@ -19,13 +19,9 @@ router.get('/', function(req, res, next) {
 router.post('/request?*', function(req, res, next) {
     request.get("http://"+req.body.query, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.redirect('/list?q='+body);
+            res.send(JSON.parse(body));
         }
     });
-});
-
-router.get('/list?*', function(req, res, next){
-    res.render('list', { title: "Profit Next - List", data: JSON.parse(req.query.q)});
 });
 
 router.get('/text?*', function(req, res, next) {

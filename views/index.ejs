@@ -355,7 +355,20 @@
             }
             console.log(query);
             $.post("/request", {query: query}, function (data) {
-                console.log(data);
+                var html = '<table class="table"><thead><tr>';
+                  for(var i=0; i<1; i++){
+                    html += '<th>'+ Object.keys(data[0])[i] +'</th>';
+                  }
+                    html += '</tr></thead><tbody>';
+                  for(var i in data){
+                    html += '<tr>';
+                    for(var j=0; j<1; j++){
+                      html += '<td>'+ data[i][Object.keys(data[0])[j]] +'</td>';
+                    }
+                    html += '</tr>';
+                  }
+                    html += '</tbody></table>';
+                 $('#text').html(html);
             });
         }
     });
