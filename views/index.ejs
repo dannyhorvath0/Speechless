@@ -118,8 +118,10 @@
             if (annyang) {
                 if(annyang.isListening()) {
                     annyang.pause();
+                    $('#text').css({color: "black"});
                 } else {
                     annyang.resume();
+                    $('#text').css({color: "red"});
                 }
             }
         };
