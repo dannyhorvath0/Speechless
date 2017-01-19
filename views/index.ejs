@@ -122,7 +122,7 @@
                     annyang.resume();
                 }
             }
-        }
+        };
 
         $scope.parseResponse = function(response) {
             console.log(response);
@@ -145,8 +145,9 @@
             if($scope.modifiedLink != $scope.link){
                 $('#text').text($scope.modifiedLink);
                 $scope.redirected();
+                annyang.pause();
             }
-        }
+        };
 
         $scope.detectVerb = function(verb) {
             if($scope.isShowVerb(verb)){
@@ -168,7 +169,7 @@
             if($scope.isMonth(noun.word)){
                 $scope.parameters.push(noun.word);
             }
-        }
+        };
 
         $scope.isShowVerb = function(verb) {
             if(showSynonym.indexOf(verb) > -1){
@@ -176,7 +177,7 @@
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.isNextTable = function(noun) {
             if(nextTables.indexOf(noun) > -1){
@@ -184,7 +185,7 @@
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.isMonth = function(noun) {
             if(months.indexOf(noun) > -1){
@@ -192,7 +193,7 @@
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.createLink = function() {
             $scope.modifiedLink = "http://" + $scope.link + $scope.table + "list";
@@ -207,7 +208,7 @@
                     }
                 })
             }
-        }
+        };
     });
 </script>
 
