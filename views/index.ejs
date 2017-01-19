@@ -99,13 +99,14 @@
             if (annyang) {
                 var commands = {
                     '*text': function(text) {
-                        $.get( "/text?t="+text, function( data ) {
-                            //$('#text').html(JSON.stringify(data, 4, null));
-                            $scope.parseResponse(data);
-                        });
-                    },
-                    'Hoeveel minnaressen heeft Bas van der Veldt': function() {
-                        $('#text').text(minnaressen);
+                        if(text == "Hoeveel minnaressen heeft Bas"){
+                            $('#text').text(minnaressen);
+                        } else {
+                            $.get("/text?t=" + text, function (data) {
+                                //$('#text').html(JSON.stringify(data, 4, null));
+                                $scope.parseResponse(data);
+                            });
+                        }
                     }
                 };
                 //Turn on debug
