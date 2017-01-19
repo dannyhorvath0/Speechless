@@ -6,6 +6,7 @@ var exec = require('child_process').exec;
 var parser = require('xml2json');
 var request = require('request');
 
+
 /*
    $ALPINO_HOME/bin/Alpino -notk -veryfast user_max=20000   server_kind=parse   server_port=11211   assume_input_is_tokenized=on   debug=0   -init_dict_p   batch_command=alpino_server
 */
@@ -18,9 +19,13 @@ router.get('/', function(req, res, next) {
 router.post('/request?*', function(req, res, next) {
     request.get("http://"+req.body.query, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.render('list', { title: "Profit Next - List", data: JSON.parse(body)});
+            res.redirect('/list?q='+body);
         }
     });
+});
+
+router.get('/list?*', function(req, res, next){
+    res.render('list', { title: "Profit Next - List", data: JSON.parse(req.query.q)});
 });
 
 router.get('/text?*', function(req, res, next) {
