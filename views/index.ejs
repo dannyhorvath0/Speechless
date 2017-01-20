@@ -1,0 +1,434 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html ng-app="speechlessApp">
+<head>
+  <!-- SCROLLS -->
+  <!-- load bootstrap and fontawesome via CDN -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title><%= title %></title>
+  <!-- SPELLS -->
+  <!-- load angular and angular route via CDN -->
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+
+</head>
+<body ng-controller="mainController" data-ng-init="init()">
+
+<div class="scroll" onclick="scrolling()">
+  <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+</div>
+
+<div id="mic1" style="display:none;">
+  <div class="container">
+    <div class="row">
+          <center>
+            <h4>Waar bent u naar opzoek?</h4>
+            <i ng-click="recordSpeech('list')" class="fa fa-microphone fa-4 button" id="micl" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+            <div><a href="{{modifiedLink}}" id="text"></a></div>
+          </center>
+    </div>
+  </div>
+</div>
+
+<div id="mic2" style="display:none;">
+  <div class="container">
+    <div class="row">
+        <center>
+          <h4>Waar bent u naar opzoek?</h4>
+          <i ng-click="recordSpeech('query')" class="fa fa-microphone fa-4 button" id="micq" aria-hidden="true" style="font-size:75px;cursor:pointer;"></i>
+          <div id="textquery"></div>
+        </center>
+    </div>
+  </div>
+</div>
+
+
+<!-- HEADER AND NAVBAR -->
+<header>
+  <nav class="navbar navbar-default">
+      <div class="navbar-header">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <i class="fa fa-search" aria-hidden="true"></i> |
+        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+      </ul>
+  </nav>
+</header>
+
+<!-- MAIN CONTENT AND INJECTED VIEWS -->
+<div id="main">
+  <div id="welkom">
+        <center>
+          <img src="/images/welkom.jpg" width="100%" />
+        </center>
+  </div>
+
+  <div id="voorstellen">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <center>
+            <img src="/images/jappie.png" width="70%"/>
+            <h3>Jasper Hoogendoorn</h3>
+          </center>
+        </div>
+        <div class="col-md-4">
+          <center>
+            <img src="/images/deDan.png" width="70%"/>
+            <h3>Danny Horvath</h3>
+          </center>
+        </div>
+        <div class="col-md-4">
+          <center>
+            <img src="/images/luuk.png" width="70%"/>
+            <h3>Luuk Maters</h3>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="introOnderwerp">
+    <div class="container">
+        <center>
+            <iframe width="100%" src="https://www.youtube.com/embed/bx8b2x-fs7A?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        </center>
+    </div>
+  </div>
+
+  <div id="infografic">
+    <div class="container">
+      <img src="/images/info.jpg" width="100%" />
+    </div>
+  </div>
+
+  <div id="demo">
+    <div class="container">
+        <center>
+          <img src="/images/demo.jpg" width="100%" />
+        </center>
+    </div>
+  </div>
+
+  <div id="conclusie">
+    <div class="container">
+        <center>
+          <img src="/images/conclusie.jpg" width="100%" />
+        </center>
+    </div>
+  </div>
+
+</div>
+
+<script>
+    //Create the module
+    var speechlessApp = angular.module('speechlessApp', []);
+    //Create controller and inject Angular's $scope
+    speechlessApp.controller('mainController', function($scope, $window, $http) {
+
+        var showSynonym = [
+            'geef',
+            'weergeef',
+            'toon',
+            'zien',
+            'bekijk',
+            'genereer',
+            'beschrijf'
+        ];
+
+        var nameSynonym = [
+            'naam',
+            'titel',
+            'omschrijving'
+        ];
+
+        var nextTables = [
+            "klanten",
+            "producten",
+            "medewerkers",
+            "leveranciers",
+            "verkooporders",
+            "organisaties"
+        ];
+
+        var months = [
+            "januari",
+            "februari",
+            "maart",
+            "april",
+            "mei",
+            "juni",
+            "juli",
+            "augustus",
+            "september",
+            "oktober",
+            "november",
+            "december"
+        ];
+
+        $scope.method = "";
+        $scope.table = "";
+        $scope.parameters = [];
+        $scope.link = "jho.whatsnext.afasgroep.nl/";
+        $scope.parseFunction = "";
+        $scope.parameterType = "";
+
+        $scope.init = function() {
+            if (annyang) {
+                var commands = {
+                    '*text': function(text) {
+                        if(text == "Hoeveel minnaressen heeft Bas van der Veldt"){
+                            $('#textquery').text("69");
+                        } else {
+                            $.get("/text?t=" + text, function (data) {
+                                $scope.parseResponse(data);
+                            });
+                        }
+                    }
+                };
+                //Turn on debug
+                annyang.debug();
+                //Set language
+                annyang.setLanguage("nl-NL");
+                // Add our commands to annyang
+                annyang.addCommands(commands);
+                // Start listening. You can call this here, or attach this call to an event, button, etc.
+                annyang.start({ autoRestart: false, paused: true, continuous: false });
+            }
+        };
+
+        $scope.recordSpeech = function(parseFunction) {
+            if (annyang) {
+                $scope.parseFunction = parseFunction;
+                if(annyang.isListening()) {
+                    micClick();
+                    annyang.abort();
+                } else {
+                    micClick();
+                    annyang.resume();
+                }
+            }
+        };
+
+        $scope.parseResponse = function(response) {
+            console.log(response);
+            $scope.parameters = [];
+            var words = response.words;
+            angular.forEach(words, function(value, key) {
+                switch(value.pt) {
+                    case "ww":
+                        $scope.detectVerb(angular.lowercase(value.word));
+                        break;
+                    case "n":
+                        $scope.detectNoun(value); //lowercase ?
+                        break;
+                    case "tw":
+                        $scope.parameters.push(value.word);
+                        break;
+                }
+            });
+            if($scope.parseFunction == "list") {
+                console.log("List parse")
+                $scope.createLink();
+                if($scope.modifiedLink != $scope.link){
+                    $('#text').text($scope.modifiedLink);
+                    $scope.redirected();
+                    annyang.abort();
+                    micClick();
+                    $scope.resetVariables();
+                }
+            } else if ($scope.parseFunction == "query") {
+                console.log("Query parse'")
+                $scope.getQuery();
+                annyang.abort();
+                micClick();
+            }
+        };
+
+        $scope.resetVariables = function() {
+            $scope.method = "";
+            $scope.table = "";
+            $scope.parameters = [];
+
+        };
+
+        $scope.detectVerb = function(verb) {
+            if($scope.isShowVerb(verb)){
+                $scope.method = "SELECT";
+            }
+        };
+
+        $scope.redirected = function(){
+            if($scope.modifiedLink) {
+                $window.open($scope.modifiedLink, '_blank');
+            }
+        };
+
+        $scope.detectNoun = function(noun) {
+            if($scope.isNextTable(noun.word)){
+                var root = noun.root;
+                var stripped_root = root.replace('_', '');
+                var stripped_root = stripped_root.charAt(0).toUpperCase() + stripped_root.slice(1);
+                $scope.table = stripped_root;
+            }
+            if(noun.pos == "name") {
+                $scope.parameters.push(noun.word);
+            }
+            if($scope.isMonth(noun.word)){
+                $scope.parameters.push(noun.word);
+            }
+            if($scope.isNameParameter(noun.word)){
+                $scope.parameterType = "Omschrijving";
+            }
+        };
+
+        $scope.isShowVerb = function(verb) {
+            if(showSynonym.indexOf(verb) > -1){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.isNameParameter = function(noun) {
+            if(nameSynonym.indexOf(noun) >-1){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.isNextTable = function(noun) {
+            if(nextTables.indexOf(noun) > -1){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.isMonth = function(noun) {
+            if(months.indexOf(noun) > -1){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.createLink = function() {
+            if($scope.table != "") {
+                $scope.modifiedLink = "http://" + $scope.link + $scope.table + "list";
+                var length = $scope.parameters.length;
+                if (length > 0) {
+                    $scope.modifiedLink = $scope.modifiedLink + "?=";
+                    angular.forEach($scope.parameters, function (value, index) {
+                        if ((index + 1) == length) {
+                            $scope.modifiedLink = $scope.modifiedLink + value;
+                        } else {
+                            $scope.modifiedLink = $scope.modifiedLink + value + "&";
+                        }
+                    })
+                }
+            }
+        };
+
+        $scope.getQuery = function() {
+            var url = $scope.link + "Imp/QueryModelObjects/" + $scope.table + "/" + $scope.table + "CurrentGetItemsQuery.query?";
+            if($scope.parameterType) {
+                if($scope.parameterType != ""){
+                    var filter = "Filter=contains(" + $scope.parameterType + "%2C'" + $scope.parameters[0] + "')";
+                    var queryParams = "&skip=0&take=50&sortColumn=" + $scope.parameterType + "&sortType=Ascending";
+                    var query = url + filter + queryParams;
+                }
+            }
+            console.log(query);
+            $.post("/request", {query: query}, function (data) {
+                console.log(data);
+                if(data != undefined || data != null || data.length > 0) {
+                    var html = '<table class="table"><thead><tr>';
+                    for (var i = 0; i < 1; i++) {
+                        html += '<th>' + Object.keys(data[0])[i] + '</th>';
+                    }
+                    html += '</tr></thead><tbody>';
+                    for (var i in data) {
+                        html += '<tr>';
+                        for (var j = 0; j < 1; j++) {
+                            html += '<td>' + data[i][Object.keys(data[0])[j]] + '</td>';
+                        }
+                        html += '</tr>';
+                    }
+                    html += '</tbody></table>';
+                    $('#textquery').html(html);
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+  var sp = 0;
+  var n = 0;
+    $(window).keypress(function (e) {
+        if (e.keyCode === 0 || e.keyCode === 32) {
+            e.preventDefault();
+            if(sp == 0){
+                sp++;
+                $('#mic1').show();
+                $('#mic2').hide();
+            }else{
+                sp--;
+                $('#mic1').hide();
+            }
+        }else if(e.keyCode === 110 || e.keyCode === 78){
+            e.preventDefault();
+            if(n == 0){
+                n++;
+                $('#mic2').show();
+                $('#mic1').hide();
+            }else{
+                n--;
+                $('#mic2').hide();
+            }
+        }
+    });
+</script>
+<script>
+  var i = 0;
+  var parts = ["welkom","voorstellen", "introOnderwerp", "infografic", "demo", "conclusie"];
+
+  function scrolling(){
+      console.log("i: "+i+" - parts: "+parts.length);
+      $('html,body').animate({
+          scrollTop: $("#"+parts[i]).offset().top-54
+      });
+      if(i == parts.length -1){
+        i = 0;
+      }else{
+          i++;
+      }
+  }
+</script>
+<script>
+  var mic1 = 0;
+  function micClick(){
+      console.log("test");
+      if(mic1 == 0){
+          $('#micq').css('color', '#f00');
+          $('#micl').css('color', '#f00');
+          mic1++;
+      }else{
+          $('#micq').css('color', '#005fab');
+          $('#micl').css('color', '#005fab');
+          mic1 = 0;
+      }
+  }
+</script>
+
+</body>
+</html>
